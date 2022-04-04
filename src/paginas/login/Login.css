@@ -1,0 +1,14 @@
+.text-decorator-none{
+    text-decoration: none;
+}
+.imagem{
+    background-image: url(https://s2.glbimg.com/WhRWDukLFd6uod1aOX4jtVoyCaU=/620x520/smart/e.glbimg.com/og/ed/f/original/2022/01/25/casimiro_268021184_141153391638749_2848775898946237094_n.jpg);
+    background-repeat: no-repeat;
+    width: 100vh;
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+}
+.texto{
+    font-weight: bold !important;
+}
