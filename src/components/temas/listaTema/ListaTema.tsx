@@ -5,11 +5,15 @@ import Tema from '../../../models/Tema'
 import './ListaTema.css';
 import useLocalStorage from 'react-use-localstorage';
 import { busca } from '../../../services/Service';
+import { useSelector } from 'react-redux';
+import { TokenState } from '../../../store/tokens/tokensReducer';
 
 function ListaTema() {
 
   const [temas, setTemas] = useState<Tema[]>([])
-  const [token, setToken] = useLocalStorage('token');
+  const token = useSelector<TokenState, TokenState["tokens"]>(
+    (state)=> state.tokens
+  );
   let history = useHistory();
 
   useEffect(()=>{
@@ -20,8 +24,8 @@ function ListaTema() {
   },[token])
 
   async function getTema(){
-    await busca("/tema", setTemas, {
-      Headers: {
+    await busca("/temas", setTemas, {
+      headers: {
         'Authorization': token
       }
     })  

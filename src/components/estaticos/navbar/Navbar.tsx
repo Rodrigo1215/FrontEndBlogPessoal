@@ -1,56 +1,84 @@
 import React from "react";
+import { Link, useHistory } from "react-router-dom";
 import { AppBar, Toolbar, Typography, Box } from '@material-ui/core';
 import './Navbar.css';
-import { Link } from "react-router-dom";
+import { TokenState } from "../../../store/tokens/tokensReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { addToken } from "../../../store/tokens/actions";
+
 
 function Navbar() {
-    return (
-        <>
+    const token = useSelector<TokenState, TokenState["tokens"]>(
+        (state) => state.tokens
+    );
+    let history = useHistory();
+    const dispatch = useDispatch();
 
-            <AppBar position="static">
-                <div id="barra">
-                    <Toolbar variant="dense">
-                        <Box style={{ cursor: "pointer" }} >
-                            <Typography variant="h5" color="inherit">
-                                BlogPessoal
-                            </Typography>
-                        </Box>
+    function goLogout() {
+        dispatch(addToken(' '));
+        alert("Usuario Deslogado")
+        history.push('/login')
+    }
 
-                        <Box display="flex" justifyContent="start">
-                            <Box mx={1} style={{ cursor: "pointer" }}>
+    var navbarComponent;
+
+    if (token != "") {
+        navbarComponent = <AppBar position="static">
+            <div id="barra">
+                <Toolbar variant="dense">
+                    <Box className='cursor'>
+                        <Typography variant="h5" color="inherit">
+                            BlogPessoal
+                        </Typography>
+                    </Box>
+                    <Box display="flex" justifyContent="start">
+
+                        <Link to='/home' className="text-decorator-none">
+                            <Box mx={1} className='cursor'>
                                 <Typography variant="h6" color="inherit">
                                     Home
                                 </Typography>
                             </Box>
-                            <Box mx={1} style={{ cursor: "pointer" }}>
+                        </Link>
+                        <Link to='/posts' className="text-decorator-none">
+                            <Box mx={1} className='cursor'>
                                 <Typography variant="h6" color="inherit">
                                     Postagens
                                 </Typography>
                             </Box>
-                            <Box mx={1} style={{ cursor: "pointer" }}>
+                        </Link>
+
+                        <Link to='/temas' className="text-decorator-none">
+                            <Box mx={1} className='cursor'>
                                 <Typography variant="h6" color="inherit">
                                     Temas
                                 </Typography>
                             </Box>
-                            <Box mx={1} style={{ cursor: "pointer" }}>
+                        </Link>
+                        <Link to='/formularioTema' className="text-decorator-none">
+                            <Box mx={1} className='cursor'>
                                 <Typography variant="h6" color="inherit">
                                     Cadastrar Tema
                                 </Typography>
                             </Box>
-                            <Link to='/login' className='text-decorator-none'>
-                                <Box mx={1} style={{ cursor: "pointer", color: "white" }}>
-                                    <Typography variant="h6" color="inherit">
-                                        Logout
-                                    </Typography>
-                                </Box>
-                            </Link>
+                        </Link>
 
+                        <Box mx={1} className='cursor' onClick={goLogout}>
+                            <Typography variant="h6" color="inherit">
+                                Logout
+                            </Typography>
                         </Box>
 
-                    </Toolbar>
-                </div>
-            </AppBar>
+                    </Box>
 
+                </Toolbar>
+            </div>
+        </AppBar>
+    }
+
+    return (
+        <>
+            {navbarComponent}
         </>
     )
 }
